@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% load static %} <!-- This line is needed to use the static tag -->
+
+{% block content %}
+
+
+    <!-- Map -->
+    <div id="map" data-latitude="3.157537" data-longitude="101.712062" style="height: 650px; width: 100%;" class=" " tabindex="0">
+        
+        <div class="leaflet-control-container">
+            <div class="leaflet-top leaflet-left">
+                <div class="leaflet-control-zoom leaflet-bar leaflet-control">
+                    <a class="leaflet-control-zoom-in" title="Zoom in">+</a>
+                    <a class="leaflet-control-zoom-out" title="Zoom out">-</a>
+                </div>
+            </div> 
+            <div class="leaflet-bottom leaflet-right">
+                <div class="leaflet-control-attribution leaflet-control">
+                    <a title="Housing Analytics">HouzScore</a> |
+                    <a>  | <a>Leaflet</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end Map --> 
+
+
+    <!-- Search Box -->
+    <div class="search-box-wrapper" style="top: 104px;">
+        <div class="search-box-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4">
+                        
+                        <div style="padding-top: 50px" class="search-box map show-search-box">
+                            <form method="post" id="stateForm" class="form-map form-search" action="{% url 'analytics:property_cma' %}">
+                                {% csrf_token %}
+                                <h2 style="font-size: 22px; text-align: center;">Search Your Property</h2>
+                                <div class="form-group">
+                                    {{ form.state }}
+                                </div>
+                                <div class="form-group" >
+                                    <input type="text" id="addressInput" name="address" placeholder="Enter address" autocomplete="off">
+                                    <div id="addressSuggestions" class="suggestions-dropdown">
+                                        <!-- Address suggestions will be listed here -->
+                                    </div>
+                                </div>
+                                <div style="padding-bottom: 10px"> 
+                                    <button type="submit" class="btn btn-default">Search Now</button>
+                                </div>
+                            </form>
+                        </div><!-- /.search-box.map -->
+ 
+
+                    </div><!-- /.col-md-3 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.search-box-inner -->
+    </div>
+    <!-- end Search Box -->
+
+    <!-- Page Content -->
+    <div id="page-content"> 
+        <section style="padding-bottom: 5%;" id="our-services" class="block">
+            <div class="container">
+                <header style="text-align: center; padding-top: 30px ; padding-bottom: 20px;" class="section-title"><h3 style="font-size:24px ;">Our Services</h3></header>
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="feature-box equal-height" style="height: 200px; padding-left: 10%; padding-right: 10%; padding-top: 5% ;align-items: center;"> 
+                             
+                                <header><h2 style="font-size:16px  ; text-align: center; " >Comparative Market Analysis</h2></header>
+                                <p style="font-size:14px  ; text-align: center; ">Property analysis against similar homes together with identified amenities.</p>
+                                <a style="padding-top: 5%; font-size: 12px; display: flex; justify-content: center; text-align: center;" href="{% url 'analytics:property_cma' %}">Read More</a>
+
+                             
+                        </div><!-- /.feature-box -->
+                    </div><!-- /.col-md-4 -->
+                    <div class="col-md-4 col-sm-4">
+                        <div class="feature-box equal-height" style="height: 200px; padding-left: 10%; padding-right: 10%; padding-top: 5% ;align-items: center;"> 
+                             
+                                <header><h2 style="font-size:16px  ; text-align: center; " >Housing Analytic Scoring Report</h2></header>
+                                <p style="font-size:14px  ; text-align: center; ">Discover your property's scores and potential using data-driven insights.</p>
+                                <a style="padding-top: 5%; font-size: 12px; display: flex; justify-content: center; text-align: center;" href="{% url 'analytics:housing_analytic_report' %}">Read More</a>
+
+                             
+                        </div><!-- /.feature-box -->
+                    </div><!-- /.col-md-4 -->
+                    <div class="col-md-4 col-sm-4">
+                        <div class="feature-box equal-height" style="height: 200px; padding-left: 10%; padding-right: 10%; padding-top: 5% ;align-items: center;"> 
+                             
+                                <header><h2 style="font-size:16px  ; text-align: center; " >AI HomeBuyer Advisor</h2></header>
+                                <p style="font-size:14px  ; text-align: center; ">Determine eligibility and monthly payment for housing loan using AI.</p>
+                                <a style="padding-top: 5%; font-size: 12px; display: flex; justify-content: center; text-align: center;" href="{% url 'analytics:home' %} ">Read More</a>
+
+                             
+                        </div><!-- /.feature-box -->
+                    </div><!-- /.col-md-4 -->
+
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section><!-- /#our-services -->
+
+    <!-- end Page Content -->
+
+
+    <script charset="utf-8">var TGSort=window.TGSort||function(n){"use strict";function r(n){return n?n.length:0}function t(n,t,e,o=0){for(e=r(n);o<e;++o)t(n[o],o)}function e(n){return n.split("").reverse().join("")}function o(n){var e=n[0];return t(n,function(n){for(;!n.startsWith(e);)e=e.substring(0,r(e)-1)}),r(e)}function u(n,r,e=[]){return t(n,function(n){r(n)&&e.push(n)}),e}var a=parseFloat;function i(n,r){return function(t){var e="";return t.replace(n,function(n,t,o){return e=t.replace(r,"")+"."+(o||"").substring(1)}),a(e)}}var s=i(/^(?:\s*)([+-]?(?:\d+)(?:,\d{3})*)(\.\d*)?$/g,/,/g),c=i(/^(?:\s*)([+-]?(?:\d+)(?:\.\d{3})*)(,\d*)?$/g,/\./g);function f(n){var t=a(n);return!isNaN(t)&&r(""+t)+1>=r(n)?t:NaN}function d(n){var e=[],o=n;return t([f,s,c],function(u){var a=[],i=[];t(n,function(n,r){r=u(n),a.push(r),r||i.push(n)}),r(i)<r(o)&&(o=i,e=a)}),r(u(o,function(n){return n==o[0]}))==r(o)?e:[]}function v(n){if("TABLE"==n.nodeName){for(var a=function(r){var e,o,u=[],a=[];return function n(r,e){e(r),t(r.childNodes,function(r){n(r,e)})}(n,function(n){"TR"==(o=n.nodeName)?(e=[],u.push(e),a.push(n)):"TD"!=o&&"TH"!=o||e.push(n)}),[u,a]}(),i=a[0],s=a[1],c=r(i),f=c>1&&r(i[0])<r(i[1])?1:0,v=f+1,p=i[f],h=r(p),l=[],g=[],N=[],m=v;m<c;++m){for(var T=0;T<h;++T){r(g)<h&&g.push([]);var C=i[m][T],L=C.textContent||C.innerText||"";g[T].push(L.trim())}N.push(m-v)}t(p,function(n,t){l[t]=0;var a=n.classList;a.add("tg-sort-header"),n.addEventListener("click",function(){var n=l[t];!function(){for(var n=0;n<h;++n){var r=p[n].classList;r.remove("tg-sort-asc"),r.remove("tg-sort-desc"),l[n]=0}}(),(n=1==n?-1:+!n)&&a.add(n>0?"tg-sort-asc":"tg-sort-desc"),l[t]=n;var i,f=g[t],m=function(r,t){return n*f[r].localeCompare(f[t])||n*(r-t)},T=function(n){var t=d(n);if(!r(t)){var u=o(n),a=o(n.map(e));t=d(n.map(function(n){return n.substring(u,r(n)-a)}))}return t}(f);(r(T)||r(T=r(u(i=f.map(Date.parse),isNaN))?[]:i))&&(m=function(r,t){var e=T[r],o=T[t],u=isNaN(e),a=isNaN(o);return u&&a?0:u?-n:a?n:e>o?n:e<o?-n:n*(r-t)});var C,L=N.slice();L.sort(m);for(var E=v;E<c;++E)(C=s[E].parentNode).removeChild(s[E]);for(E=v;E<c;++E)C.appendChild(s[v+L[E-v]])})})}}n.addEventListener("DOMContentLoaded",function(){for(var t=n.getElementsByClassName("tg"),e=0;e<r(t);++e)try{v(t[e])}catch(n){}})}(document)
+
+        var mapElement = document.getElementById('map');
+        var defaultLatitude = parseFloat(mapElement.getAttribute('data-latitude'));
+        var defaultLongitude = parseFloat(mapElement.getAttribute('data-longitude'));
+
+        // Function to initialize the map
+        function initMap(latitude, longitude) {
+        // Adjust the longitude to move the map's center slightly to the left
+        var offsetLongitude = longitude - 0.025; // Adjust the value as needed
+
+        var map = L.map('map').setView([latitude, offsetLongitude], 14);
+        //L.tileLayer('https://api.mapbox.com/styles/v1/aamiradeeb/clqs37z3w00x801o32m8q1g5e/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWFtaXJhZGVlYiIsImEiOiJjanhxM3N4cXQwb2t4M2hvMWdpdWVzeDEwIn0.UluD1JcZorzK9KDZfk1FuQ', {
+        //maxZoom: 15, 
+        //minZoom: 13,
+        //attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox'
+        //}).addTo(map); 
+
+        //L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', c
+        
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { 
+             maxZoom: 15,
+             minZoom: 13,
+         }).addTo(map);
+ 
+
+        // The circle remains centered at the original location
+        var circle = L.circle([latitude, longitude], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.1,
+            radius: 2500, // 2.5km in meters
+        }).addTo(map);
+        }
+
+        // Check if geolocation is available
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                // If geolocation is available and permission is granted
+                initMap(position.coords.latitude, position.coords.longitude);
+            }, function() {
+                // If permission is denied
+                initMap(defaultLatitude, defaultLongitude);
+            });
+        } else {
+            // If geolocation is not supported by the browser
+            initMap(defaultLatitude, defaultLongitude);
+        } 
+        // Address autocomplete functionality
+        document.getElementById('addressInput').addEventListener('input', function() {
+        var input = this.value;
+        if (input.length > 2) {
+            // Include the countrycodes parameter set to 'MY' for Malaysia
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=MY&q=${input}`)
+                .then(response => response.json())
+                .then(data => {
+                    var suggestions = document.getElementById('addressSuggestions');
+                    suggestions.innerHTML = '';
+                    data.forEach(item => {
+                        var div = document.createElement('div');
+                        div.innerHTML = item.display_name;
+                        div.onclick = function() {
+                            document.getElementById('addressInput').value = item.display_name;
+                            suggestions.innerHTML = '';
+                        };
+                        suggestions.appendChild(div);
+                    });
+                });
+        }
+    });
+
+</script>
+
+{% endblock %}
+ 

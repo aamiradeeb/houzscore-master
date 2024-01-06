@@ -1,0 +1,514 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %} 
+
+    <style>
+        .line {
+            --tw-bg-opacity: 1;
+            background-color: rgba(226, 232, 240, var(--tw-bg-opacity));
+            height: 0.25rem;
+        }
+        .sentence-case {
+        text-transform: lowercase;
+        }
+        .sentence-case::first-letter {
+            text-transform: uppercase;
+        }
+        .dataTables_filter input {
+        width: 200px;  
+        }
+
+        .content {
+        display: flex; /* Enables flexbox layout */
+        justify-content: space-between; /* Spaces out the left and right sections */
+    
+
+        }
+
+        .left-section {
+            width: 26%; /* Adjust width as needed */
+            /* Additional styling */
+        }
+
+        .right-section {
+            width: 68%; /* Adjust width as needed */
+            margin: 10px; /* Adds space around the element */
+            padding-left: 10px; /* Adds space inside on the left */
+            padding-right: 10px; /* Adds space inside on the right */
+            padding-bottom: 80px;
+            border: 0.1px solid rgb(66, 66, 66,0.3); /* Adds a border */
+            background-color: rgb(255, 255, 255); /* Sets background color */
+            /* Additional styling */
+        }
+
+        .left-sectionreport {
+            width: 26%; /* Adjust width as needed */
+            margin-left: 30px;
+        }
+
+        .right-sectionreport {
+            width: 68%; /* Adjust width as needed */
+            margin-right: 30px;
+        }
+
+        .right-sectionreport-text {
+            text-align: right; /* Aligns text to the left */
+        }
+
+    </style>
+
+<script>
+    $(document).ready(function () {
+        $('#propertiesTable').DataTable({
+            "lengthChange": false, // Hides the 'Show entries' dropdown
+            "pageLength": 50      
+        });
+        $('#schoolsTable').DataTable({
+            "lengthChange": false,
+            "pageLength": 10
+        });
+        $('#healthcareTable').DataTable({
+            "lengthChange": false,
+            "pageLength": 10
+        });
+        // Repeat for other tables as needed
+    });
+</script>
+
+
+    <!-- Page Content -->
+
+    <!-- Define data attributes for URLs -->
+    <div id="markerIconUrls" 
+
+    home-base-url="{% static 'images/marker-icon-base.png' %}" 
+    icon-url="{% static 'images/marker-icon-2x.png' %}" 
+    shadow-url="{% static 'images/marker-shadow.png' %}">
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top: 5px; ; padding-bottom: 0px">
+        <ol class="breadcrumb" > 
+            <li class="active">Housing Analytic Report</li>
+        </ol>
+    </div>
+    <!-- end Breadcrumb -->
+
+
+    <div class="container"  style="padding-top:0px ;padding-bottom:50px ">
+        <h3 style="font-size: 12px; color: rgb(66, 66, 66); font-weight: bold;"> Enter your information for Housing Analytic Report</h3> 
+        
+        <div class="content" style="padding-bottom: 0%;">
+        <!-- Map --> 
+        <div class="left-section" id="form-report"> 
+         
+        <form method="post" id="AnalyticForm" class="form-map form-search" action="{% url 'analytics:housing_analytic_report' %}">
+            {% csrf_token %}    
+
+            <div class="form-group" >
+                {{ form.name }}
+            </div>
+
+            <div class="form-group" >
+                {{ form.state }}
+            </div>
+            <div class="form-group"  >
+                <input type="text" id="addressInput" name="address" placeholder="Enter address" autocomplete="off">
+                <div id="addressSuggestions" class="suggestions-dropdown">
+                    <!-- Address suggestions will be listed here -->
+                </div>
+            </div>
+
+            <div class="form-group" >
+                {{ form.phone_number }}
+            </div>
+            <div class="form-group" >
+                {{ form.email }}
+            </div>
+
+            <div class="form-group" >
+                {{ form.house_type }}
+            </div>
+            <div class="form-group" >
+                {{ form.year_built }}
+            </div>
+            <div class="form-group" >
+                {{ form.number_of_rooms }}
+            </div>
+            <!-- 
+            <div class="form-group" >
+                {{ form.number_of_rooms }}
+            </div>
+            <div class="form-group" >
+                {{ form.number_of_bathrooms }}
+            </div>
+            <div class="form-group" >
+                {{ form.built_up_area }}
+            </div>
+            <div class="form-group" >
+                {{ form.expenditure }}
+            </div>
+            <div class="form-group" >
+                {{ form.income }}
+            </div>
+            <div class="form-group" >
+                {{ form.number_of_family_members }}
+            </div> -->
+            <div style="padding-bottom: 10px; width: 100%;"> 
+                <button type="submit" class="btn btn-default" style="padding-bottom: 10px; width: 100%;">Submit</button>
+            </div>
+        
+        </form>
+
+        
+        </div> 
+
+        <div class="right-section" id="form-report1"> 
+
+            <h3 style="margin-top: 50px;margin-bottom: 50px;font-size: 19px; color: rgb(66, 66, 66); font-weight: bold;text-align: center;
+                background-color: whitesmoke;
+                color: rgb(66, 66, 66); font-weight: bold; margin-left: 20px;margin-right: 20px;
+                padding-top: 10px;padding-bottom: 10px;
+                padding-left: 10px;padding-right: 10px;"> 
+                 Housing Analytic Report</h3> 
+        
+            {% if username %} 
+            <div style=" text-align: right; font-weight: bold; color:Blue; font-size:  48px;margin-right: 9%; ">
+                
+            </div>
+            <div style=" text-align: right; color:rgb(69, 69, 69); font-size:  24px;margin-right: 8%; padding-top: 0px;" >
+                 
+            </div>
+
+            <div class="content" style="padding-top: 20px;" >
+                <div class="left-sectionreport" > 
+                    <div class="content">
+                        <div>
+
+                            <div>  
+                                {{ username }} 
+                            </div>
+                            <div style="padding-top: 20px;">
+                                {{ location_data.name }} 
+                            </div>
+                            <div> 
+                                {{ email }} 
+                            </div> 
+                            <div> 
+                                {{ phone_number }} 
+                            </div> 
+                            
+                        </div>  
+                    </div>   
+                </div>
+
+                <div class="right-sectionreport" > 
+
+                </div>
+            </div>
+
+            <div>     
+            <h3 style=" background-color: whitesmoke;
+                font-size: 12px; color: rgb(66, 66, 66); font-weight: bold;text-align: left; margin-left: 20px;margin-right: 20px;
+                padding-top: 10px;padding-bottom: 10px;
+                padding-left: 10px;padding-right: 10px;"> 
+                Property Information</h3> 
+  
+                <div class="content">
+                    <div class="left-sectionreport" > 
+                        <div class="content">
+                            <div>
+                                <div>
+                                    Address 
+                                </div>
+                                <div>
+                                    State
+                                </div>
+                                <!--div>
+                                    District
+                                </div> -->
+                                <div>
+                                    House Type
+                                </div>
+                                <div>
+                                    Year Built
+                                </div>
+                                <!--<div>
+                                    Number of Floors
+                                </div> 
+                                <div>
+                                    Number of Rooms
+                                </div>
+                                <div>
+                                    Number of Bathrooms
+                                </div>
+                                <div>
+                                    Built-up Area (sq.ft)
+                                </div>
+                            -->
+                            </div>  
+                        </div>   
+                    </div>
+     
+                    <div class="right-sectionreport" >  
+                        <div class="right-sectionreport-text">
+                            <div class="right-sectionreport-text" style="text-align: right; " > 
+                                {{ location_data.name }} 
+                            </div>
+                            <div>
+                                {{selected_state}}
+                            </div>
+                            <!--div>
+                                District
+                            </div> -->
+                            <div>
+                               {{house_type}}
+                            </div>
+                            <div>
+                                {{year_built}}
+                            </div>
+                            <!--<div>
+                                Number of Floors
+                            </div> 
+                            <div>
+                                {{number_of_rooms}}
+                            </div>
+                            <div>
+                                Number of Bathrooms
+                            </div>
+                            <div>
+                                Built-up Area (sq.ft)
+                            </div>
+                             -->
+                        </div>  
+                    </div>    
+                </div>
+            </div>   
+
+            <!--
+
+            <div>     
+                <h3 style=" background-color: whitesmoke;
+                    font-size: 12px; color: rgb(66, 66, 66); font-weight: bold;text-align: left; margin-left: 20px;margin-right: 20px;
+                    padding-top: 10px;padding-bottom: 10px;
+                    padding-left: 10px;padding-right: 10px;"> 
+                    Personal  Information</h3> 
+      
+                    <div class="content">
+                        <div class="left-sectionreport" > 
+                            <div class="content">
+                                <div>
+                                    <div>
+                                        Expenditure
+                                    </div>
+                                    <div>
+                                        Income
+                                    </div>
+                                    <div>
+                                        Number of all family member
+                                    </div> 
+    
+                                </div>  
+                            </div>   
+                        </div>
+         
+                        <div class="right-sectionreport" >  
+                            <div class="right-sectionreport-text">
+                                <div>
+                                    Expenditure
+                                </div>
+                                <div>
+                                    Income
+                                </div>
+                                <div>
+                                    Number of all family member
+                                </div> 
+                            </div>  
+                        </div>    
+                    </div>
+                </div>   
+
+                -->
+
+                <div>     
+                    <h3 style=" background-color: whitesmoke;
+                        font-size: 12px; color: rgb(66, 66, 66); font-weight: bold;text-align: left; margin-left: 20px;margin-right: 20px;
+                        padding-top: 10px;padding-bottom: 10px;
+                        padding-left: 10px;padding-right: 10px;"> 
+                        Nearby Properties</h3> 
+
+                        {% if nearby_residential %} 
+          
+                        <div class="tg-wrap" style=" 
+                        font-size: 12px; margin-left: 20px;margin-right: 20px;
+                        padding-top: 10px;padding-bottom: 10px;
+                        padding-left: 10px;padding-right: 10px;"> 
+                            <table id="propertiesTable" class="display" > 
+                            <thead>
+                            <tr>
+                                <th >No.</th> 
+                                <th style="width: fit-content;padding-right: 10px; padding-left: 10px;">Name</th>
+                                <th style="text-align:center">Type</th>
+                                <th style="text-align:center">Level</th>
+                                <th style="text-align:center">Distance (KM)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for residential in nearby_residential %}
+                                <div class="residential-marker" data-latitude="{{ residential.latitude }}" data-longitude="{{ residential.longitude }}" style="display:none;"> 
+                                    <tr>
+                                        <td >{{ forloop.counter }}</td> 
+                                        <td style="width: fit-content; padding-right: 10px; padding-left: 10px;">{{ residential.name }}</td>
+                                        <td class="sentence-case" style="text-align:center">{{ residential.residential_type }}</td>
+                                        <td style="text-align:center">{{ residential.levels }}</td>
+                                        <td style="text-align:center">{{ residential.distance }}</td>
+                                    </tr>
+                                </div>
+                            {% endfor %}
+                            </tbody>
+                            </table>
+                        </div> 
+                        {% endif %} 
+                    </div>   
+
+                    <!--
+            
+
+                    <div>     
+                    <h3 style=" background-color: whitesmoke;
+                        font-size: 12px; color: rgb(66, 66, 66); font-weight: bold;text-align: left; margin-left: 20px;margin-right: 20px;
+                        padding-top: 10px;padding-bottom: 10px;
+                        padding-left: 10px;padding-right: 10px;"> 
+                        Demographics and Neighborhood Data by District</h3> 
+                    <div> 
+                        <div class="tg-wrap" style=" 
+                        font-size: 12px; margin-left: 20px;margin-right: 20px;
+                        padding-top: 10px;padding-bottom: 10px;
+                        padding-left: 10px;padding-right: 10px;"> 
+
+                        </div>
+           
+                    </div>   
+
+                    <div>     
+                    <h3 style=" background-color: whitesmoke;
+                        font-size: 12px; color: rgb(66, 66, 66); font-weight: bold;text-align: left; margin-left: 20px;margin-right: 20px;
+                        padding-top: 10px;padding-bottom: 10px;
+                        padding-left: 10px;padding-right: 10px;"> 
+                        Transportation and Infrastructure within 2.5 KM</h3> 
+            
+                        <div> 
+                            <div class="tg-wrap" style=" 
+                            font-size: 12px; margin-left: 20px;margin-right: 20px;
+                            padding-top: 10px;padding-bottom: 10px;
+                            padding-left: 10px;padding-right: 10px;"> 
+    
+                            </div>
+                
+                        </div> 
+                    
+                    <h3 style=" background-color: whitesmoke;
+                    font-size: 12px; color: rgb(66, 66, 66); font-weight: bold;text-align: left; margin-left: 20px;margin-right: 20px;
+                    padding-top: 10px;padding-bottom: 10px;
+                    padding-left: 10px;padding-right: 10px;"> 
+                    Nearby Amenities within 2.5 KM</h3> 
+        
+                    <div> 
+
+
+                        <div class="tg-wrap" style=" 
+                        font-size: 12px; margin-left: 20px;margin-right: 20px;
+                        padding-top: 10px;padding-bottom: 10px;
+                        padding-left: 10px;padding-right: 10px;"> 
+
+                        </div>
+            
+                    </div>   
+ 
+                    <h3 style=" background-color: whitesmoke;
+                    font-size: 12px; color: rgb(66, 66, 66); font-weight: bold;text-align: left; margin-left: 20px;margin-right: 20px;
+                    padding-top: 10px;padding-bottom: 10px;
+                    padding-left: 10px;padding-right: 10px;"> 
+                    Transportation and Infrastructure within 2.5 KM</h3> 
+        
+                    <div> 
+
+
+                        <div class="tg-wrap" style=" 
+                        font-size: 12px; margin-left: 20px;margin-right: 20px;
+                        padding-top: 10px;padding-bottom: 10px;
+                        padding-left: 10px;padding-right: 10px;"> 
+
+                        </div>
+            
+                    </div> 
+                    
+                    -->
+
+                    {% endif %} 
+ 
+  
+
+
+        </div>
+ 
+    <!-- end Page Content -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var originalTable = document.getElementById('tg-VadQK');
+            var rows = originalTable.getElementsByTagName('tr');
+            var dynamicTable = document.createElement('table');
+            dynamicTable.id = 'dynamicTable';
+            dynamicTable.className = 'tg-wrap';
+
+            // Copy headers
+            var headerRow = rows[0].cloneNode(true);
+            dynamicTable.appendChild(headerRow);
+
+            // Copy and process data rows
+            for (var i = 1; i < rows.length; i++) {
+                var newRow = rows[i].cloneNode(true);
+                // Additional processing or event listener bindings can be done here
+                dynamicTable.appendChild(newRow);
+            }
+
+            // Replace the old table with the new one
+            var container = document.getElementById('dynamicTableContainer');
+            container.innerHTML = ''; // Clear existing content
+            container.appendChild(dynamicTable);
+        });
+
+    </script>
+     
+    <script charset="utf-8"> 
+        // Address autocomplete functionality
+        document.getElementById('addressInput').addEventListener('input', function() {
+        var input = this.value;
+        if (input.length > 2) {
+            // Include the countrycodes parameter set to 'MY' for Malaysia
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=MY&q=${input}`)
+                .then(response => response.json())
+                .then(data => {
+                    var suggestions = document.getElementById('addressSuggestions');
+                    suggestions.innerHTML = '';
+                    data.forEach(item => {
+                        var div = document.createElement('div');
+                        div.innerHTML = item.display_name;
+                        div.onclick = function() {
+                            document.getElementById('addressInput').value = item.display_name;
+                            suggestions.innerHTML = '';
+                        };
+                        suggestions.appendChild(div);
+                    });
+                });
+        }
+    });
+
+    </script>
+    
+
+
+
+{% endblock %}

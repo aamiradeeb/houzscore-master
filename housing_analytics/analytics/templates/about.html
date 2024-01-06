@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% load static %} <!-- This line is needed to use the static tag -->
+
+{% block content %}
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
+    .departments {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    .department {
+        margin: 10px;
+        text-align: center;
+    }
+    .department img {
+        max-width: 190px;
+        max-height: 190px;
+        width: auto;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .top-department {
+        width: 100%; /* Full width */
+    }
+    .bottom-departments {
+        display: flex;
+        justify-content: space-around;
+        width: 100%; /* Full width */
+    }
+
+    .about-section {
+        background-color: #f2f2f2;
+        padding: 20px;
+        margin-top: 20px;
+    }
+    .about-section h2 {
+        text-align: center;
+    }
+    .about-text {
+        margin-top: 20px;
+        text-align: justify;
+    }
+</style>
+
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top: 5px; ; padding-bottom: 0px">
+        <ol class="breadcrumb" > 
+            <li class="active">About Us</li>
+        </ol>
+    </div>
+    <!-- end Breadcrumb -->
+
+<div class="container">
+ 
+    <!-- Organization Chart -->
+    <!-- Department on Top -->
+    <div class="top-department">
+        <div class="department">
+            <img src="{% static 'stockfile/rosylin.png' %}" alt="Professor Dr. Rosylin Mohd Yusof">
+            <p>Professor Dr. Rosylin Mohd Yusof</p>
+            <p class="department-name">Management</p>
+        </div>
+    </div>
+
+    <!-- Department on Bottom -->
+    
+    <div class="bottom-departments">
+        <div class="department">
+            <img src="{% static 'stockfile/adeeb.png' %}" alt="Dr. Aamir Adeeb Abdul Rahim">
+            <p>Dr. Aamir Adeeb Abdul Rahim</p>
+            <p class="department-name">Technology</p>
+        </div>  
+        <div class="department">
+            <img src="{% static 'stockfile/zaemah.png' %}" alt="Prof. Madya Dr. Zaemah Zainuddin">
+            <p>Prof. Madya Dr. Zaemah Zainuddin</p>
+            <p class="department-name">Finance</p>
+        </div>   
+        <div class="department">
+            <img src="{% static 'stockfile/cy.png' %}" alt="Dr. Lee Chin Yee">
+            <p>Dr. Lee Chin Yee</p>
+            <p class="department-name">Operation</p>
+        </div>
+    </div> 
+<!-- About Section -->
+<div class="about-section">
+    <h2 style="font-size: 24px;">Housing Analytic Research Group</h2> 
+
+    <div class="about-text" style="color: rgb(64, 64, 64);padding-left: 100px;padding-right: 100px;padding-bottom: 20px;">
+        <p>
+            Founded in 2018, Housing Analytic Research Group has emerged as a key player in the real estate data analytics sector in Malaysia. Our genesis was marked by a collaboration of academicians with a focus on revolutionizing the real estate market through data-driven methodologies. Today, we are recognized for our commitment to assisting homebuyers in making well-informed decisions, backed by robust data analysis.
+        </p> 
+
+        <br>
+        
+        <p><strong>Our Specialization:</strong><br>
+        We leverage a distinctive combination of spatial data and advanced analytics to deliver insights into urban dynamics, land-use patterns, and development trends. Our objective is to improve and simplify the home buying process through accurate and comprehensive data analysis.
+        </p>
+
+        <br>
+        
+        <p><strong>Our Products and Services:</strong><br>
+        <strong>Comparative Market Analysis (CMA):</strong> This tool provides a detailed comparison of properties, considering similar homes and relevant amenities to offer a reliable property valuation.<br>
+        <strong>Housing Analytic Scoring Report:</strong> This report evaluates the potential and value of properties based on data-driven insights, presenting a clear and objective analysis.<br>
+        <strong>AI HomeBuyer Advisor:</strong> Utilizing AI technology, this tool helps prospective buyers understand their housing loan eligibility and estimate monthly payments, facilitating a more informed financial decision-making process.
+        </p>
+
+        <br>
+        
+        <p>
+        In addition to these offerings, we provide a range of services, including market intelligence, location analysis, and sustainability assessments, catering to a diverse clientele in Malaysia and Southeast Asia. Our goal is to empower our clients with data-driven strategies to guide urban development and contribute to a sustainable market.
+        </p>
+
+        <br>
+
+        <p>
+        At Housing Analytic Research Group, we believe in the significant role of data in improving decision-making processes in the real estate sector. Our team, comprised of skilled professionals, is dedicated to leveraging cutting-edge technology and expertise to bring valuable insights to our clients.
+        </p>
+
+        <br>
+
+        <p>
+        We invite you to explore our data-centric approach for a more informed and efficient experience in the real estate market.
+        </p>
+
+        <br>
+        
+    </div>
+</div>
+
+{% endblock %}

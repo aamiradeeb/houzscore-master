@@ -1,0 +1,143 @@
+
+{% load static %}
+
+<!DOCTYPE html> 
+<html lang="en-US" style="height: auto;  ">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+    <!-- Include CSS Stylesheets --> 
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/bootstrap-select.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/jquery.slider.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/owl.carousel.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/osm.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/leaflet.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/MarkerCluster.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Style CSS with cache busting -->
+    <link href="{% static 'css/style.css' %}?v=1" rel="stylesheet" type="text/css">
+ 
+ 
+ 
+    <!-- Include Leaflet CSS and JavaScript -->
+    
+    <title>HouzScore</title>
+
+    <link href="{% static 'css/leaflet.css' %}" rel="stylesheet" type="text/css">
+    <script style= "margin:0" src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> 
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: auto; 
+        }
+        
+    </style>
+  
+</head>
+
+
+
+<body class="body" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
+<!-- Wrapper -->
+<div class="wrapper">
+
+    <div class="navigation"> 
+        <div class="container"  >
+            <header class="navbar" id="top" role="banner">
+                <div class="navbar-header"> 
+                    <div  id="brand">
+                        <a href="{% url 'analytics:home' %}" style="font-size: 16px; font-weight: bold;">HouzScore</a>
+                            <!-- <img src="./Zoner _ OSM Fixed Height_files/logo@2x.png" alt="brand" width="94" height="27"></a> -->
+                    </div>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+                    <ul class="nav navbar-nav"> 
+                        <li><a>Feature</a>
+                            <ul class="child-navigation" >
+                                <!-- <li><a href="{% url 'analytics:ai_home_advisor' %}">Ai Advisor</a></li>-->
+                                <li><a href="{% url 'analytics:property_cma' %}">CMA</a></li>
+                                <li><a href="{% url 'analytics:housing_analytic_report' %}">Analytic report</a></li> 
+                            </ul>
+                        </li>
+                        <!-- <li><a href="http://themestarz.net/html/zoner/index-osm-fixed-height.html#">User</a>
+                            <ul class="child-navigation navigation-to-left"> 
+                                <li><a href="http://themestarz.net/html/zoner/create-account.html">Create Account</a></li> 
+                                <li><a href="http://themestarz.net/html/zoner/sign-in.html">Sign In</a></li>
+                                <li><a href="http://themestarz.net/html/zoner/profile.html">Profile</a></li>
+                                <li><a href="http://themestarz.net/html/zoner/my-properties.html">My Properties</a></li> 
+                                <li><a href="http://themestarz.net/html/zoner/invoice-print.html">Invoice</a></li>
+                            </ul>    
+                        </li>
+
+                        <li ><a href="http://themestarz.net/html/zoner/index-osm-fixed-height.html#">Blog</a>
+                            <ul class="child-navigation navigation-to-left">
+                                <li><a href="http://themestarz.net/html/zoner/blog.html">Blog Listing</a></li>
+                                <li><a href="http://themestarz.net/html/zoner/blog-detail.html">Blog Post Detail</a></li>
+                            </ul>
+                        </li> -->
+
+                        <li><a href="{% url 'analytics:about' %}">About Us</a>
+                            <ul class="child-navigation navigation-to-left">
+                                <li><a href="{% url 'analytics:about' %}">About Us</a></li> 
+                            </ul>
+                        </li>
+                    </ul>
+                </nav><!-- /.navbar collapse-->
+
+                  
+            </header><!-- /.navbar -->
+        </div><!-- /.container -->
+    </div><!-- /.navigation -->
+    <!-- Rest of your website content goes here -->
+
+    <main>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    <div>
+        <!-- <section id="banner">
+            <div class="block has-dark-background background-color-default-darker center text-banner">
+                <div class="container">
+                    <h1 class="no-bottom-margin no-border"> </h1>
+                </div>
+            </div>
+        </section>/#banner -->
+    </div>
+    <!-- end Page Content -->
+
+    <!-- Page Footer -->
+    <footer id="page-footer"> 
+        <div class="inner">
+            <div id="footer-main">
+                <div class="container">  
+                </div><!-- /.container -->
+            </div><!-- /#footer-main --> 
+            <div id="footer-copyright">
+                <div class="container" style="font-size: 12px; padding-top: 10px; padding-bottom: 20px;"> 
+                    <strong>HouzScore</strong><br>
+                    <strong>Housing Analytic Research Group</strong><br>
+                    Malaysia 
+                    <span>Copyright © 2024. All Rights Reserved.</span> 
+                </div>
+                </div>
+            </div>
+        </div><!-- /.inner -->
+    </footer>
+    
+    <!-- end Page Footer -->
+</div>
+ 
+</body>
+</html>

@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %} 
+
+    <style>
+        .line {
+            --tw-bg-opacity: 1;
+            background-color: rgba(226, 232, 240, var(--tw-bg-opacity));
+            height: 0.25rem;
+        }
+        .sentence-case {
+        text-transform: lowercase;
+        }
+        .sentence-case::first-letter {
+            text-transform: uppercase;
+        }
+        .dataTables_filter input {
+        width: 200px;  
+        }
+
+
+        .content {
+            display: flex; /* This enables flexbox layout */
+            justify-content: space-between; /* This will space out the left and right sections */
+        }
+
+        .left-section, .right-section {
+            width: 25%; /* Adjust width as needed */
+            padding-left: 20px;
+            /* Additional styling */
+        }
+
+        /* Additional responsive or specific styling can be added here */
+
+    </style>
+
+<script>
+    $(document).ready(function () {
+        $('#propertiesTable').DataTable({
+            "lengthChange": false, // Hides the 'Show entries' dropdown
+            "pageLength": 50      
+        });
+        $('#schoolsTable').DataTable({
+            "lengthChange": false,
+            "pageLength": 10
+        });
+        $('#healthcareTable').DataTable({
+            "lengthChange": false,
+            "pageLength": 10
+        });
+        // Repeat for other tables as needed
+    });
+</script>
+
+
+    <!-- Page Content -->
+
+    <!-- Define data attributes for URLs -->
+    <div id="markerIconUrls" 
+
+    home-base-url="{% static 'images/marker-icon-base.png' %}" 
+    icon-url="{% static 'images/marker-icon-2x.png' %}" 
+    shadow-url="{% static 'images/marker-shadow.png' %}">
+    </div>
+
+ 
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top: 5px;">
+        <ol class="breadcrumb" > 
+            <li class="active">Comparative Market Analysis</li>
+        </ol>
+    </div>
+    <!-- end Breadcrumb -->
+
+
+        <div class="container"  style="padding-top:5px">
+            <h2 style="font-size: 14px; color: rgb(66, 66, 66); font-weight: bold;"> {{ location_data.name }}</h2> 
+            
+            <div class="content">
+            <!-- Map --> 
+            <div class="left-section" id="map" 
+            data-latitude="{{ location_data.latitude|safe }}" 
+            data-longitude="{{ location_data.longitude|safe }}" 
+            style="height: 600px;" 
+            >
+                <div class="leaflet-map-pane" >
+                    <div class="leaflet-tile-pane">
+                        <div class="leaflet-layer">
+                            <div class="leaflet-tile-container"></div>
+                            <div class="leaflet-tile-container leaflet-zoom-animated"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="leaflet-objects-pane">
+                    <div class="leaflet-shadow-pane"></div>
+                    <div class="leaflet-overlay-pane">
+                        <svg class="leaflet-zoom-animated" width="1092" height="981" viewBox="174 -137 1092 981" style="transform: translate3d(174px, -137px, 0px);"></svg>
+                    </div>
+                </div>
+                <div class="leaflet-control-container">
+                    <div class="leaflet-top leaflet-left">
+                        <div class="leaflet-control-zoom leaflet-bar leaflet-control">
+                            <a class="leaflet-control-zoom-in" title="Zoom in">+</a>
+                            <a class="leaflet-control-zoom-out" title="Zoom out">-</a>
+                        </div>
+                    </div>
+                    <div class="leaflet-top leaflet-right"></div>
+                    <div class="leaflet-bottom leaflet-left"></div>
+                    <div class="leaflet-bottom leaflet-right">
+                        <div class="leaflet-control-attribution leaflet-control">
+                            <a title="Housing Analytics">HouzScore</a> |
+                            <a>OpenStreetMap | | <a>Leaflet</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end Map -->  
+
+            <div class="right-section" id="search-box"  >
+            <form method="post" id="stateForm" class="form-map form-search" action="{% url 'analytics:property_cma' %}">
+                {% csrf_token %} 
+                    <p class="active" style="text-align: center">Search Your Property</p>  
+                <div class="form-group" >
+                    {{ form.state }}
+                </div>
+                <div class="form-group"  >
+                    <input type="text" id="addressInput" name="address" placeholder="Enter address" autocomplete="off">
+                    <div id="addressSuggestions" class="suggestions-dropdown">
+                        <!-- Address suggestions will be listed here -->
+                    </div>
+                </div>
+                <div style="padding-bottom: 10px; width: 100%;"> 
+                    <button type="submit" class="btn btn-default" style="padding-bottom: 10px; width: 100%;">Search Now</button>
+                </div>
+            </form>
+            </div>
+            </div>
+
+            <div style="padding-bottom: 30px; padding-top: 50px">
+                <!-- property -->
+                    {% if nearby_residential %} 
+                    <div style="padding-bottom: 30px; padding-top: 10px">
+                    <!--  <div class="line"></div>-->
+                    <section>
+                        <h2 style="font-size: 14px; color: rgb(66, 66,66); font-weight: bold;">Nearby Properties </h2>       
+                            <div class="tg-wrap">
+                                <table id="propertiesTable" class="display" > 
+                                <thead>
+                                <tr>
+                                    <th >No.</th> 
+                                    <th style="width: fit-content;padding-right: 10px; padding-left: 10px;">Name</th>
+                                    <th style="text-align:center">Type</th>
+                                    <th style="text-align:center">Level</th>
+                                    <th style="text-align:center">Distance (KM)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for residential in nearby_residential %}
+                                    <div class="residential-marker" data-latitude="{{ residential.latitude }}" data-longitude="{{ residential.longitude }}" style="display:none;"> 
+                                        <tr>
+                                            <td >{{ forloop.counter }}</td> 
+                                            <td style="width: fit-content; padding-right: 10px; padding-left: 10px;">{{ residential.name }}</td>
+                                            <td class="sentence-case" style="text-align:center">{{ residential.residential_type }}</td>
+                                            <td style="text-align:center">{{ residential.levels }}</td>
+                                            <td style="text-align:center">{{ residential.distance }}</td>
+                                        </tr>
+                                    </div>
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                            </div>
+                    </section>
+                    </div>
+                    <!--  <div class="line"></div>-->
+                    <div style="padding-bottom: 30px; padding-top: 10px">
+                    <section>
+                            <h2 style="font-size: 14px; color: rgb(66, 66,66); font-weight: bold;">Nearby Educational Facilities </h2>       
+                            <div class="tg-wrap">
+                                <table id="schoolsTable" class="display" > 
+                                <thead>
+                                <tr>
+                                    <th >No.</th> 
+                                    <th style="width: fit-content;padding-right: 10px; padding-left: 10px;">Name</th>
+                                    <th style="text-align:center">Type</th>
+                                    <th style="text-align:center">Distance (KM)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for educational_facilities in nearby_educational_facilities %}       
+                                        <tr>
+                                            <td >{{ forloop.counter }}</td> 
+                                            <td style="width: fit-content; padding-right: 10px; padding-left: 10px;">{{ educational_facilities.name }}</td>
+                                            <td class="sentence-case" style="text-align:center">{{ educational_facilities.facility_type }}</td>
+                                            <td style="text-align:center">{{ educational_facilities.distance }}</td>
+                                        </tr>
+                                    </div>
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                            </div> 
+                    </section>   
+                    </div>
+                    <!--  <div class="line"></div>-->
+                    <div style="padding-bottom: 30px; padding-top: 10px">
+                        <section>
+                            <h2 style="font-size: 14px; color: rgb(66, 66,66); font-weight: bold;">Nearby Healthcare Facilities </h2>   
+
+                                <div class="tg-wrap" >
+                                    <table id="healthcareTable" class="display" > 
+                                    <thead>
+                                    <tr>
+                                        <th >No.</th> 
+                                        <th style="width: fit-content;padding-right: 10px; padding-left: 10px;">Name</th>
+                                        <th style="text-align:center">Type</th>
+                                        <th style="text-align:center">Distance (KM)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for healthcare_facilities in nearby_healthcare_facilities %}
+                                            <tr>
+                                                <td >{{ forloop.counter }}</td> 
+                                                <td style="width: fit-content; padding-right: 10px; padding-left: 10px;">{{ healthcare_facilities.name }}</td>
+                                                <td class="sentence-case" style="text-align:center">{{ healthcare_facilities.facility_type }}</td>
+                                                <td style="text-align:center">{{ healthcare_facilities.distance }}</td>
+                                            </tr>
+                                        </div>
+                                    {% endfor %}
+                                    </tbody>
+                                    </table>
+                                </div>
+                        </section>
+                        </div>
+                    {% endif %} 
+            </div> 
+    <!-- end Page Content -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var originalTable = document.getElementById('tg-VadQK');
+            var rows = originalTable.getElementsByTagName('tr');
+            var dynamicTable = document.createElement('table');
+            dynamicTable.id = 'dynamicTable';
+            dynamicTable.className = 'tg-wrap';
+
+            // Copy headers
+            var headerRow = rows[0].cloneNode(true);
+            dynamicTable.appendChild(headerRow);
+
+            // Copy and process data rows
+            for (var i = 1; i < rows.length; i++) {
+                var newRow = rows[i].cloneNode(true);
+                // Additional processing or event listener bindings can be done here
+                dynamicTable.appendChild(newRow);
+            }
+
+            // Replace the old table with the new one
+            var container = document.getElementById('dynamicTableContainer');
+            container.innerHTML = ''; // Clear existing content
+            container.appendChild(dynamicTable);
+        });
+
+    </script>
+     
+    <script charset="utf-8">
+        document.addEventListener('DOMContentLoaded', function() {
+            var mapElement = document.getElementById('map');
+            if (!mapElement) {
+                console.error('Map element not found');
+                return;
+            }
+            
+            // Parse the latitude and longitude for the main location
+            var latitude = parseFloat(mapElement.getAttribute('data-latitude'));
+            var longitude = parseFloat(mapElement.getAttribute('data-longitude'));
+    
+            // Initialize the map
+            var map = L.map('map').setView([latitude, longitude], 13);
+    
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 21,
+            }).addTo(map);
+    
+            // Add a circle for the main location
+            L.circle([latitude, longitude], {
+                color: 'blue',
+                fillColor: 'blue',
+                fillOpacity: 0.1,
+                radius: 2500, // 2.5km in meters
+            }).addTo(map);
+
+
+    
+            // Define a new icon
+            var newIcon = L.icon({
+                iconUrl: document.getElementById('markerIconUrls').getAttribute('icon-url'),
+                shadowUrl: document.getElementById('markerIconUrls').getAttribute('shadow-url'),
+                iconSize: [20, 36],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+
+            // Define a base property
+
+            var OtherPropertyIcon = L.icon({
+                iconUrl: document.getElementById('markerIconUrls').getAttribute('home-base-url'),
+                shadowUrl: document.getElementById('markerIconUrls').getAttribute('shadow-url'),
+                iconSize: [20, 36],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+    
+            // Add a marker for the main location
+            var marker = L.marker([latitude, longitude], {icon: newIcon}).addTo(map);
+
+            var markers = document.querySelectorAll('.residential-marker');
+            
+                markers.forEach(function(markerElement) {
+                    var lat = parseFloat(markerElement.getAttribute('data-latitude'));
+                    var lng = parseFloat(markerElement.getAttribute('data-longitude'));
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        L.marker([lat, lng], {icon: OtherPropertyIcon}).addTo(map);
+                    }
+                });
+ 
+        });
+
+        // Geolocation functionality
+        var defaultLatitude = 0; // Set your default latitude
+        var defaultLongitude = 0; // Set your default longitude
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                initMap(position.coords.latitude, position.coords.longitude);
+            }, function() {
+                initMap(defaultLatitude, defaultLongitude);
+            });
+        } else {
+            initMap(defaultLatitude, defaultLongitude);
+        }
+
+        function initMap(latitude, longitude) {
+            var map = L.map('map').setView([latitude, longitude], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 21,
+            }).addTo(map);
+            // Additional map setup code goes here...
+        }
+
+        // Address autocomplete functionality
+        document.getElementById('addressInput').addEventListener('input', function() {
+        var input = this.value;
+        if (input.length > 2) {
+            // Include the countrycodes parameter set to 'MY' for Malaysia
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=MY&q=${input}`)
+                .then(response => response.json())
+                .then(data => {
+                    var suggestions = document.getElementById('addressSuggestions');
+                    suggestions.innerHTML = '';
+                    data.forEach(item => {
+                        var div = document.createElement('div');
+                        div.innerHTML = item.display_name;
+                        div.onclick = function() {
+                            document.getElementById('addressInput').value = item.display_name;
+                            suggestions.innerHTML = '';
+                        };
+                        suggestions.appendChild(div);
+                    });
+                });
+        }
+    });
+
+    </script>
+    
+
+
+
+{% endblock %}

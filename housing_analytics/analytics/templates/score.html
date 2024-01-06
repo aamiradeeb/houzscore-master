@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+ 
+{% block content %} 
+
+  
+<style>
+    @media print {
+      .hide-on-print {
+        display: none;
+      }
+    }
+  </style>
+  
+  
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <a href="javascript:window.print()" class="button-icon btn btn-default"><i ></i><span class="hide-on-print">Print this report</span></a>
+                    <div class="invoice">
+                        <section>
+                            <table>
+                                <tr>
+                                    <td><h1>Invoice</h1></td>
+                                    <td id="number" class="text-align-right">
+                                        <figure>Number:</figure>
+                                        <h3>05834</h3>
+                                    </td>
+                                    <td id="date" class="text-align-right">
+                                        <figure>Date:</figure>
+                                        <h3>12/06/14</h3>
+                                    </td>
+                                </tr>
+                            </table>
+                        </section>
+                        <section>
+                            <aside>
+                                <h2>From</h2>
+                                <address>
+                                    <div class="title">Genius Properties</div>
+                                    <div class="address-line">4635 Deans Lane</div>
+                                    <div class="address-line">New York, NY 10019</div>
+                                </address>
+                                <div class="contact-info">
+                                    <dl>
+                                        <dt>Phone:</dt>
+                                        <dd>914-740-1421</dd>
+                                        <dt>Email:</dt>
+                                        <dd>your.company@example.com</dd>
+                                        <dt>Website:</dt>
+                                        <dd>www.example.com</dd>
+                                    </dl>
+                                </div>
+                            </aside>
+                            <aside>
+                                <h2>To</h2>
+                                <address>
+                                    <div class="title">David A. Williams</div>
+                                    <div class="address-line">1812 Spruce Drive</div>
+                                    <div class="address-line">Belle Vernon, PA 15012 </div>
+                                </address>
+                                <div class="contact-info">
+                                    <dl>
+                                        <dt>Phone:</dt>
+                                        <dd>724-930-6762</dd>
+                                        <dt>Email:</dt>
+                                        <dd>david.williams@example.com</dd>
+                                        <dt>Website:</dt>
+                                        <dd>www.example.com</dd>
+                                    </dl>
+                                </div>
+                            </aside>
+                        </section>
+                        <section>
+                            <h4>Note:</h4>
+                            <p>Phasellus massa erat, ultricies congue neque nec, egestas tempor sapien. Fusce dui orci
+                                pellentesque nec nulla non, semper euismod nibh. Ut faucibus, arcu quis elementum mollis
+                            </p>
+                        </section>
+                        <section class="no-border" id="description">
+                            <h2>Description</h2>
+                            <dl>
+                                <dt>Lender:</dt>
+                                <dd>Genius Properties</dd>
+                                <dt>Client:</dt>
+                                <dd>David A. Williams</dd>
+                                <dt>Property Adress:</dt>
+                                <dd>4763 Capitol Avenue</dd>
+                                <dt>City::</dt>
+                                <dd>Indianapolis</dd>
+                                <dt>Country:</dt>
+                                <dd>IN</dd>
+                                <dt>ZIP:</dt>
+                                <dd>46278</dd>
+                            </dl>
+                        </section>
+                        <section id="description-table" class="no-border">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>VAT</th>
+                                    <th>Total Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Property Renewal</td>
+                                    <td>1</td>
+                                    <td>$8,000</td>
+                                    <td>0%</td>
+                                    <td>$8,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Apartment Purchase</td>
+                                    <td>1</td>
+                                    <td>$78,000</td>
+                                    <td>0%</td>
+                                    <td>$78,000</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                        <section class="text-align-right" id="subtotal">
+                            <aside>
+                                <figure><strong>Subtotal:</strong></figure>
+                                <figure><strong>Discount:</strong></figure>
+                            </aside>
+                            <aside>
+                                <figure>$86,000</figure>
+                                <figure>$7000</figure>
+                            </aside>
+                        </section>
+                        <section id="summary">
+                            <h2 class="no-bottom-margin">Total Due:</h2>
+                            <figure>$79,000</figure>
+                        </section>
+                        <section id="underline" class="no-border">
+                            <p>
+                                Maecenas in ante a purus tincidunt euismod. Donec porta metus at interdum convallis.
+                                Sed fringilla mauris quis posuere venenatis. Proin non nunc consequat,
+                                bibendum felis nec, volutpat arcu
+                            </p>
+                        </section>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+     
+
+
+
+
+{% endblock %}

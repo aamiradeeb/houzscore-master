@@ -1,0 +1,4 @@
+source venv/bin/activate
+cd housing_analytics
+python manage.py migrate
+python manage.py runserver
